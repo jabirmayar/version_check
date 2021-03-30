@@ -21,10 +21,10 @@ class StoreVersionAndUrl {
 }
 
 class VersionCheck {
-  String? packageName;
-  String? packageVersion;
-  String? storeVersion;
-  String? storeUrl;
+  String packageName;
+  String packageVersion;
+  String storeVersion;
+  String storeUrl;
 
   GetStoreVersionAndUrl getStoreVersionAndUrl;
   ShowUpdateDialog showUpdateDialog;
@@ -66,7 +66,7 @@ class VersionCheck {
       }
     }
 
-    final storeVersionAndUrl = await getStoreVersionAndUrl(packageName!);
+    final storeVersionAndUrl = await getStoreVersionAndUrl(packageName);
     if (storeVersionAndUrl != null) {
       storeVersion = storeVersionAndUrl.storeVersion;
       storeUrl = storeVersionAndUrl.storeUrl;
@@ -160,7 +160,7 @@ Future<StoreVersionAndUrl> _getMacStoreVersionAndUrl(String bundleId) async {
   return null;
 }
 
-bool _shouldUpdate(String packageVersion, String? storeVersion) {
+bool _shouldUpdate(String packageVersion, String storeVersion) {
   if (packageVersion == storeVersion) return false;
 
   final arr1 = packageVersion.split('.');
