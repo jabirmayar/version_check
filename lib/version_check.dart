@@ -200,7 +200,7 @@ _showUpdateDialog(BuildContext context, VersionCheck versionCheck) {
             TextButton(
               child: Text('Update'),
               onPressed: () async {
-                Navigator.of(context).pop();
+               // Navigator.of(context).pop();
                 await versionCheck.launchStore();
               },
             ),
