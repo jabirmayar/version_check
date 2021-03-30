@@ -47,8 +47,8 @@ class VersionCheck {
   Future checkVersion(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-    packageName ??= packageInfo.packageName;
-    packageVersion ??= packageInfo.version;
+    packageName = packageInfo.packageName;
+    packageVersion = packageInfo.version;
 
     if (getStoreVersionAndUrl == null) {
       switch (Platform.operatingSystem) {
@@ -72,7 +72,7 @@ class VersionCheck {
       storeUrl = storeVersionAndUrl.storeUrl;
 
       if (hasUpdate) {
-        showUpdateDialog ??= _showUpdateDialog;
+        showUpdateDialog = _showUpdateDialog;
         showUpdateDialog(context, this);
       }
     }
