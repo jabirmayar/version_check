@@ -163,8 +163,8 @@ Future<StoreVersionAndUrl> _getMacStoreVersionAndUrl(String bundleId) async {
 bool _shouldUpdate(String packageVersion, String? storeVersion) {
   if (packageVersion == storeVersion) return false;
 
-  final arr1 = packageVersion!.split('.');
-  final arr2 = storeVersion!.split('.');
+  final arr1 = packageVersion.split('.');
+  final arr2 = storeVersion.split('.');
 
   for (int i = 0; i < math.min(arr1.length, arr2.length); i++) {
     int v1 = int.tryParse(arr1[i]);
