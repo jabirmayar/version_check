@@ -181,36 +181,30 @@ bool _shouldUpdate(String? packageVersion, String? storeVersion) {
 
   return false;
 }
-
-void _showUpdateDialog(BuildContext context, VersionCheck versionCheck) {
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (context) => AlertDialog(
-      title: Text('Update Available'),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            Text('Do you want to update to ${versionCheck.storeVersion}?'),
-            Text('(current version ${versionCheck.packageVersion})'),
+  
+_showUpdateDialog(BuildContext context, VersionCheck versionCheck) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: Text('Update Available'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Update to the latest version ${versionCheck.storeVersion} of the application.'),
+                Text('(Current version is ${versionCheck.packageVersion})'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Update'),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await versionCheck.launchStore();
+              },
+            ),
           ],
         ),
-      ),
-      actions: <Widget>[
-        TextButton(
-          child: Text('Update'),
-          onPressed: () async {
-            Navigator.of(context).pop();
-            await versionCheck.launchStore();
-          },
-        ),
-        TextButton(
-          child: Text('Close'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-    ),
-  );
-}
+      );
+    }
