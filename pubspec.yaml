@@ -10,10 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  package_info: ^2.0.0
-  http: ^0.13.0
-  html: ^0.15.0
-  url_launcher: ^6.0.2
+  package_info: ^0.4.3+4 
+  http: ^0.12.2
+  html: ^0.14.0+4 
+  url_launcher: ^5.7.13
 
 dev_dependencies:
   flutter_test:
