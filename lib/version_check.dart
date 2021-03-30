@@ -10,7 +10,7 @@ import 'dart:math' as math;
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-typedef Future<StoreVersionAndUrl?> GetStoreVersionAndUrl(String packageName);
+typedef Future<StoreVersionAndUrl> GetStoreVersionAndUrl(String packageName);
 typedef void ShowUpdateDialog(BuildContext context, VersionCheck versionCheck);
 
 class StoreVersionAndUrl {
@@ -26,8 +26,8 @@ class VersionCheck {
   String? storeVersion;
   String? storeUrl;
 
-  GetStoreVersionAndUrl? getStoreVersionAndUrl;
-  ShowUpdateDialog? showUpdateDialog;
+  GetStoreVersionAndUrl getStoreVersionAndUrl;
+  ShowUpdateDialog showUpdateDialog;
 
   /// VersionCheck constructor
   ///
@@ -95,7 +95,7 @@ class VersionCheck {
   }
 }
 
-Future<StoreVersionAndUrl?> _getIOSStoreVersionAndUrl(String bundleId) async {
+Future<StoreVersionAndUrl> _getIOSStoreVersionAndUrl(String bundleId) async {
   final uri = Uri.https('itunes.apple.com', '/lookup', {'bundleId': bundleId});
   final resp = await http.get(uri);
 
@@ -109,7 +109,7 @@ Future<StoreVersionAndUrl?> _getIOSStoreVersionAndUrl(String bundleId) async {
   return null;
 }
 
-Future<StoreVersionAndUrl?> _getAndroidStoreVersionAndUrl(
+Future<StoreVersionAndUrl> _getAndroidStoreVersionAndUrl(
     String packageName) async {
   final uri = Uri.https('play.google.com', '/store/apps/details',
       {'id': packageName, 'hl': 'en'});
@@ -129,7 +129,7 @@ Future<StoreVersionAndUrl?> _getAndroidStoreVersionAndUrl(
 
       final cv =
           elements.firstWhere((element) => element.text == 'Current Version');
-      final version = cv.nextElementSibling!.text;
+      final version = cv.nextElementSibling.text;
       return StoreVersionAndUrl(version, url);
     } catch (_) {}
     try {
@@ -137,7 +137,7 @@ Future<StoreVersionAndUrl?> _getAndroidStoreVersionAndUrl(
 
       final cv =
           elements.firstWhere((element) => element.text == 'Current Version');
-      final version = cv.nextElementSibling!.text;
+      final version = cv.nextElementSibling.text;
       return StoreVersionAndUrl(version, url);
     } catch (_) {}
   }
@@ -145,7 +145,7 @@ Future<StoreVersionAndUrl?> _getAndroidStoreVersionAndUrl(
   return null;
 }
 
-Future<StoreVersionAndUrl?> _getMacStoreVersionAndUrl(String bundleId) async {
+Future<StoreVersionAndUrl> _getMacStoreVersionAndUrl(String bundleId) async {
   final uri = Uri.https('itunes.apple.com', '/lookup/', {'bundleId': bundleId});
   final resp = await http.get(uri);
 
@@ -160,15 +160,15 @@ Future<StoreVersionAndUrl?> _getMacStoreVersionAndUrl(String bundleId) async {
   return null;
 }
 
-bool _shouldUpdate(String? packageVersion, String? storeVersion) {
+bool _shouldUpdate(String packageVersion, String? storeVersion) {
   if (packageVersion == storeVersion) return false;
 
   final arr1 = packageVersion!.split('.');
   final arr2 = storeVersion!.split('.');
 
   for (int i = 0; i < math.min(arr1.length, arr2.length); i++) {
-    int? v1 = int.tryParse(arr1[i]);
-    int? v2 = int.tryParse(arr2[i]);
+    int v1 = int.tryParse(arr1[i]);
+    int v2 = int.tryParse(arr2[i]);
 
     if (v1 == null || v2 == null) {
       if (arr2[i].compareTo(arr1[i]) > 0) {
