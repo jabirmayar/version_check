@@ -73,7 +73,7 @@ class VersionCheck {
 
       if (hasUpdate) {
         showUpdateDialog ??= _showUpdateDialog;
-        showUpdateDialog!(context, this);
+        showUpdateDialog(context, this);
       }
     }
   }
