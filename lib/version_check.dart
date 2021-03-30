@@ -66,7 +66,7 @@ class VersionCheck {
       }
     }
 
-    final storeVersionAndUrl = await getStoreVersionAndUrl!(packageName!);
+    final storeVersionAndUrl = await getStoreVersionAndUrl(packageName!);
     if (storeVersionAndUrl != null) {
       storeVersion = storeVersionAndUrl.storeVersion;
       storeUrl = storeVersionAndUrl.storeUrl;
@@ -86,7 +86,7 @@ class VersionCheck {
 
   /// launch store for update
   Future launchStore() async {
-    final url = storeUrl!;
+    final url = storeUrl;
     if (await canLaunch(url)) {
       await launch(url);
     } else {
