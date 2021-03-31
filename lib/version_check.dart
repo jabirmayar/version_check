@@ -41,6 +41,8 @@ class VersionCheck {
     this.getStoreVersionAndUrl,
     this.showUpdateDialog,
   });
+  
+  bool updateAvailable = false;
 
   /// check version from iOS/Android/Mac store and
   /// provide update dialog if update is available.
@@ -78,15 +80,7 @@ class VersionCheck {
       }
     }
   }
-  bool updateAvailable = false;
   
-  Future<bool> updateAvailable(){
-    if(updateAvailable)
-    return true;
-    else{
-    return false;
-    }
-  }
 
   get hasUpdate {
     if (packageVersion == null) return false;
