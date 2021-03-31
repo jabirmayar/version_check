@@ -72,16 +72,26 @@ class VersionCheck {
       storeUrl = storeVersionAndUrl.storeUrl;
 
       if (hasUpdate) {
+        updateAvailable = true;
         showUpdateDialog = _showUpdateDialog;
         showUpdateDialog(context, this);
       }
+    }
+  }
+  bool updateAvailable = false;
+  
+  Future<bool> updateAvailable(){
+    if(updateAvailable)
+    return true;
+    else{
+    return false;
     }
   }
 
   get hasUpdate {
     if (packageVersion == null) return false;
     if (storeVersion == null) return false;
-    return _shouldUpdate(packageVersion, storeVersion);
+    return shouldUpdate(packageVersion, storeVersion);
   }
 
   /// launch store for update
@@ -160,7 +170,7 @@ Future<StoreVersionAndUrl> _getMacStoreVersionAndUrl(String bundleId) async {
   return null;
 }
 
-bool _shouldUpdate(String packageVersion, String storeVersion) {
+bool shouldUpdate(String packageVersion, String storeVersion) {
   if (packageVersion == storeVersion) return false;
 
   final arr1 = packageVersion.split('.');
