@@ -28,6 +28,7 @@ class VersionCheck {
 
   GetStoreVersionAndUrl getStoreVersionAndUrl;
   ShowUpdateDialog showUpdateDialog;
+  Function isUpdateAvailable;
 
   /// VersionCheck constructor
   ///
@@ -40,9 +41,9 @@ class VersionCheck {
     this.packageVersion,
     this.getStoreVersionAndUrl,
     this.showUpdateDialog,
+    this.isUpdateAvailable,
   });
   
-  bool updateAvailable = false;
 
   /// check version from iOS/Android/Mac store and
   /// provide update dialog if update is available.
@@ -74,9 +75,11 @@ class VersionCheck {
       storeUrl = storeVersionAndUrl.storeUrl;
 
       if (hasUpdate) {
-        updateAvailable = true;
+        isUpdateAvailable(true);
         showUpdateDialog = _showUpdateDialog;
         showUpdateDialog(context, this);
+      }else{
+        isUpdateAvailable(false);
       }
     }
   }
