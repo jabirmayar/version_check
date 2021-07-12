@@ -28,7 +28,7 @@ class VersionCheck {
 
   GetStoreVersionAndUrl? getStoreVersionAndUrl;
   ShowUpdateDialog? showUpdateDialog;
-  Function? isUpdateAvailable;
+  Function isUpdateAvailable;
 
   /// VersionCheck constructor
   ///
@@ -41,7 +41,7 @@ class VersionCheck {
     this.packageVersion,
     this.getStoreVersionAndUrl,
     this.showUpdateDialog,
-    this.isUpdateAvailable,
+    required this.isUpdateAvailable,
   });
   
 
@@ -69,7 +69,7 @@ class VersionCheck {
       }
     }
 
-    final storeVersionAndUrl = await getStoreVersionAndUrl(packageName);
+    final storeVersionAndUrl = await getStoreVersionAndUrl!(packageName);
     if (storeVersionAndUrl != null) {
       storeVersion = storeVersionAndUrl.storeVersion;
       storeUrl = storeVersionAndUrl.storeUrl;
