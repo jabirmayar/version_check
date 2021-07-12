@@ -28,7 +28,7 @@ class VersionCheck {
 
   GetStoreVersionAndUrl? getStoreVersionAndUrl;
   ShowUpdateDialog? showUpdateDialog;
-  Function isUpdateAvailable;
+  Function? isUpdateAvailable;
 
   /// VersionCheck constructor
   ///
