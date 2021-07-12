@@ -21,13 +21,13 @@ class StoreVersionAndUrl {
 }
 
 class VersionCheck {
-  String packageName;
-  String packageVersion;
-  String storeVersion;
-  String storeUrl;
+ String? packageName;
+  String? packageVersion;
+  String? storeVersion;
+  String? storeUrl;
 
-  GetStoreVersionAndUrl getStoreVersionAndUrl;
-  ShowUpdateDialog showUpdateDialog;
+  GetStoreVersionAndUrl? getStoreVersionAndUrl;
+  ShowUpdateDialog? showUpdateDialog;
   Function isUpdateAvailable;
 
   /// VersionCheck constructor
@@ -50,8 +50,8 @@ class VersionCheck {
   Future checkVersion(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-    packageName = packageInfo.packageName;
-    packageVersion = packageInfo.version;
+    packageName ??= packageInfo.packageName;
+    packageVersion ??= packageInfo.version;
 
     if (getStoreVersionAndUrl == null) {
       switch (Platform.operatingSystem) {
@@ -76,8 +76,8 @@ class VersionCheck {
 
       if (hasUpdate) {
         isUpdateAvailable(true);
-        showUpdateDialog = _showUpdateDialog;
-        showUpdateDialog(context, this);
+        showUpdateDialog ??= _showUpdateDialog;
+        showUpdateDialog!(context, this);
       }else{
         isUpdateAvailable(false);
       }
@@ -93,7 +93,7 @@ class VersionCheck {
 
   /// launch store for update
   Future launchStore() async {
-    final url = storeUrl;
+    final url = storeUrl!;
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -102,7 +102,7 @@ class VersionCheck {
   }
 }
 
-Future<StoreVersionAndUrl> _getIOSStoreVersionAndUrl(String bundleId) async {
+Future<StoreVersionAndUrl?> _getIOSStoreVersionAndUrl(String bundleId) async {
   final uri = Uri.https('itunes.apple.com', '/lookup', {'bundleId': bundleId});
   final resp = await http.get(uri);
 
@@ -116,7 +116,7 @@ Future<StoreVersionAndUrl> _getIOSStoreVersionAndUrl(String bundleId) async {
   return null;
 }
 
-Future<StoreVersionAndUrl> _getAndroidStoreVersionAndUrl(
+Future<StoreVersionAndUrl?> _getAndroidStoreVersionAndUrl(
     String packageName) async {
   final uri = Uri.https('play.google.com', '/store/apps/details',
       {'id': packageName, 'hl': 'en'});
@@ -152,7 +152,7 @@ Future<StoreVersionAndUrl> _getAndroidStoreVersionAndUrl(
   return null;
 }
 
-Future<StoreVersionAndUrl> _getMacStoreVersionAndUrl(String bundleId) async {
+Future<StoreVersionAndUrl?> _getMacStoreVersionAndUrl(String bundleId) async {
   final uri = Uri.https('itunes.apple.com', '/lookup/', {'bundleId': bundleId});
   final resp = await http.get(uri);
 
@@ -167,11 +167,11 @@ Future<StoreVersionAndUrl> _getMacStoreVersionAndUrl(String bundleId) async {
   return null;
 }
 
-bool shouldUpdate(String packageVersion, String storeVersion) {
+bool shouldUpdate(String? packageVersion, String? storeVersion) {
   if (packageVersion == storeVersion) return false;
 
-  final arr1 = packageVersion.split('.');
-  final arr2 = storeVersion.split('.');
+  final arr1 = packageVersion!.split('.');
+  final arr2 = storeVersion!.split('.');
 
   for (int i = 0; i < math.min(arr1.length, arr2.length); i++) {
     int v1 = int.tryParse(arr1[i]);
