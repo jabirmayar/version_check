@@ -10,7 +10,7 @@ import 'dart:math' as math;
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-typedef Future<StoreVersionAndUrl?> GetStoreVersionAndUrl(String? packageName);
+typedef Future<StoreVersionAndUrl?> GetStoreVersionAndUrl(String packageName);
 typedef void ShowUpdateDialog(BuildContext context, VersionCheck versionCheck);
 
 class StoreVersionAndUrl {
@@ -69,7 +69,7 @@ class VersionCheck {
       }
     }
 
-    final storeVersionAndUrl = await getStoreVersionAndUrl!(packageName);
+    final storeVersionAndUrl = await getStoreVersionAndUrl!(packageName!);
     if (storeVersionAndUrl != null) {
       storeVersion = storeVersionAndUrl.storeVersion;
       storeUrl = storeVersionAndUrl.storeUrl;
