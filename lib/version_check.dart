@@ -10,7 +10,7 @@ import 'dart:math' as math;
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-typedef Future<StoreVersionAndUrl?> GetStoreVersionAndUrl(String packageName);
+typedef Future<StoreVersionAndUrl?> GetStoreVersionAndUrl(String? packageName);
 typedef void ShowUpdateDialog(BuildContext context, VersionCheck versionCheck);
 
 class StoreVersionAndUrl {
@@ -75,11 +75,11 @@ class VersionCheck {
       storeUrl = storeVersionAndUrl.storeUrl;
 
       if (hasUpdate) {
-        isUpdateAvailable(true);
+        isUpdateAvailable!(true);
         showUpdateDialog ??= _showUpdateDialog;
         showUpdateDialog!(context, this);
       }else{
-        isUpdateAvailable(false);
+        isUpdateAvailable!(false);
       }
     }
   }
@@ -136,7 +136,7 @@ Future<StoreVersionAndUrl?> _getAndroidStoreVersionAndUrl(
 
       final cv =
           elements.firstWhere((element) => element.text == 'Current Version');
-      final version = cv.nextElementSibling.text;
+      final version = cv.nextElementSibling!.text;
       return StoreVersionAndUrl(version, url);
     } catch (_) {}
     try {
@@ -144,7 +144,7 @@ Future<StoreVersionAndUrl?> _getAndroidStoreVersionAndUrl(
 
       final cv =
           elements.firstWhere((element) => element.text == 'Current Version');
-      final version = cv.nextElementSibling.text;
+      final version = cv.nextElementSibling!.text;
       return StoreVersionAndUrl(version, url);
     } catch (_) {}
   }
@@ -174,8 +174,8 @@ bool shouldUpdate(String? packageVersion, String? storeVersion) {
   final arr2 = storeVersion!.split('.');
 
   for (int i = 0; i < math.min(arr1.length, arr2.length); i++) {
-    int v1 = int.tryParse(arr1[i]);
-    int v2 = int.tryParse(arr2[i]);
+    int? v1 = int.tryParse(arr1[i]);
+    int? v2 = int.tryParse(arr2[i]);
 
     if (v1 == null || v2 == null) {
       if (arr2[i].compareTo(arr1[i]) > 0) {
