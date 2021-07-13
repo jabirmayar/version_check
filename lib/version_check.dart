@@ -10,7 +10,7 @@ import 'dart:math' as math;
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-typedef Future<StoreVersionAndUrl> GetStoreVersionAndUrl(String packageName);
+typedef Future<StoreVersionAndUrl?> GetStoreVersionAndUrl(String packageName);
 typedef void ShowUpdateDialog(BuildContext context, VersionCheck versionCheck);
 
 class StoreVersionAndUrl {
@@ -21,14 +21,14 @@ class StoreVersionAndUrl {
 }
 
 class VersionCheck {
- String? packageName;
+  String? packageName;
   String? packageVersion;
   String? storeVersion;
   String? storeUrl;
 
   GetStoreVersionAndUrl? getStoreVersionAndUrl;
   ShowUpdateDialog? showUpdateDialog;
-  Function isUpdateAvailable;
+  Function? isUpdateAvailable;
 
   /// VersionCheck constructor
   ///
@@ -41,7 +41,7 @@ class VersionCheck {
     this.packageVersion,
     this.getStoreVersionAndUrl,
     this.showUpdateDialog,
-    required this.isUpdateAvailable,
+    this.isUpdateAvailable,
   });
   
 
